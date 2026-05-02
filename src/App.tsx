@@ -99,7 +99,7 @@ function LimitedEdition({ onOrder }: { onOrder: () => void }) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[9px] uppercase tracking-widest text-luminex-yellow/60 font-bold">Status</span>
-                  <span className="text-xs font-mono text-luminex-yellow">Batch 01 Production</span>
+                  <span className="text-xs font-mono text-luminex-yellow">Batch in Production</span>
                 </div>
               </div>
             </div>
@@ -257,8 +257,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'm1',
       name: 'Luminex M1', 
       tag: 'Flagship Concept',
-      price: '₹12,499',
-      priceNum: 12499,
+      price: '₹1,299',
+      priceNum: 1299,
       img: 'luminexm1.jpeg',
       features: ['Prism Optics', 'Liquid Titanium', 'Atmospheric Remote']
     },
@@ -266,8 +266,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'frame',
       name: 'LumiFrame V1', 
       tag: 'Desktop Minimalist',
-      price: '₹1,999',
-      priceNum: 1999,
+      price: '₹999',
+      priceNum: 999,
       img: 'LumiFrameV1.png',
       features: ['Optical Acrylic', 'USB Powered', 'Compact Design']
     },
@@ -275,8 +275,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'box',
       name: 'LumiBox', 
       tag: 'Premium Series',
-      price: '₹3,499',
-      priceNum: 3499,
+      price: '₹699',
+      priceNum: 699,
       img: 'LumiBox.png',
       features: ['Deep Etching', 'Hardwood Case', 'Ambient Glow']
     },
@@ -284,8 +284,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'chain',
       name: 'LumiChain', 
       tag: 'Pocket Artifact',
-      price: '₹599',
-      priceNum: 599,
+      price: '₹299',
+      priceNum: 299,
       img: 'LumiChain.jpg',
       features: ['Handcrafted', 'Brass Fittings', 'Key-Safe']
     }

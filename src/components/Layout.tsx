@@ -64,7 +64,7 @@ export function Hero({ onOrder }: { onOrder: () => void }) {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="inline-block text-[11px] uppercase tracking-[0.5em] text-luminex-yellow font-bold mb-8 glow-text">
-            Custom Glowing Art
+            Custom Glowing Memories
           </span>
           <h1 className="text-5xl md:text-[140px] font-serif italic leading-[1] md:leading-[0.8] tracking-tighter select-none mb-12 uppercase">
             LUMI<span className="text-luminex-yellow px-1">N</span>EX<span className="not-italic text-luminex-yellow text-glow">.</span>
@@ -72,7 +72,7 @@ export function Hero({ onOrder }: { onOrder: () => void }) {
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
             <p className="max-w-md text-xs md:text-base leading-relaxed opacity-60 italic font-serif text-center md:text-left balance">
-              "Give the one gift they'll never forget. Transform your favorite moments into enchanting, glowing works of art."
+              "Turn your favorite moments into a beautifully glowing keepsake, crafted to capture emotion, tell your story, and be treasured forever."
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 w-full md:w-auto">
               <button 
@@ -81,7 +81,9 @@ export function Hero({ onOrder }: { onOrder: () => void }) {
               >
                 Place Order
               </button>
-              <button className="flex-1 md:flex-none px-8 md:px-10 py-4 md:py-5 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-luminex-yellow hover:text-luminex-yellow transition-all pointer-events-auto">
+              <button 
+              onClick={() => window.location.href = '#how-it-works'}
+              className="flex-1 md:flex-none px-8 md:px-10 py-4 md:py-5 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-luminex-yellow hover:text-luminex-yellow transition-all pointer-events-auto">
                 The Process
               </button>
             </div>
@@ -115,21 +117,21 @@ export function ProductSection({ onOrder }: { onOrder: () => void }) {
     { 
       name: 'LumiChain', 
       desc: 'Carry your favorite memory anywhere with our signature handcrafted glowing keychain.', 
-      price: '₹599', 
+      price: '₹299', 
       icon: <Zap />, 
       img: 'LumiChain.jpg'
     },
     { 
       name: 'LumiFrame', 
       desc: 'The perfect minimalist light frame for your desktop, bringing a soft glow to your most cherished moments.', 
-      price: '₹1,999', 
+      price: '₹699', 
       icon: <Sparkles />, 
       img: 'LumiFrameV1.png'
     },
     { 
       name: 'LumiBox', 
       desc: 'Our signature deep-etched wooden light box designed for the ultimate sentimental gift.', 
-      price: '₹3,499', 
+      price: '₹999', 
       icon: <Heart />, 
       img: 'LumiBox.png'
     },
