@@ -303,7 +303,7 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-luminex-black pt-32 pb-40 relative px-6"
+      className="min-h-screen bg-luminex-black pt-12 md:pt-32 pb-24 md:pb-40 relative px-4 md:px-6"
     >
       <div className="blob bg-luminex-accent-yellow w-[800px] h-[800px] -top-40 -left-40 opacity-10 blur-3xl pointer-events-none" />
       <div className="blob bg-luminex-accent-purple w-[600px] h-[600px] bottom-0 right-0 opacity-10 blur-3xl pointer-events-none" />
@@ -317,11 +317,11 @@ function OrderPage({ onBack }: { onBack: () => void }) {
           <span className="text-xs font-bold uppercase tracking-[0.3em]">Back to Gallery</span>
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 items-start">
           {/* Left: Product Selection & Visuals */}
-          <div className="lg:col-span-7 space-y-16">
+          <div className="lg:col-span-7 space-y-12 md:space-y-16">
             <div className="space-y-6 md:space-y-4">
-               <div className="flex items-center justify-between">
+               <div className="flex items-center justify-between px-2">
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Select Artifact</span>
                   <div className="hidden md:flex gap-2">
                     {products.map((_, i) => (
@@ -329,13 +329,13 @@ function OrderPage({ onBack }: { onBack: () => void }) {
                     ))}
                   </div>
                </div>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                   {products.map((p) => (
                     <button 
                       key={p.id}
                       onClick={() => setSelectedProduct(p)}
                       className={cn(
-                        "relative p-6 rounded-3xl border transition-all text-left group overflow-hidden",
+                        "relative p-5 md:p-6 rounded-2xl md:rounded-3xl border transition-all text-left group overflow-hidden",
                         selectedProduct.id === p.id 
                           ? "bg-luminex-yellow/10 border-luminex-yellow shadow-[0_0_40px_rgba(251,191,36,0.15)]" 
                           : "bg-white/[0.02] border-white/5 hover:border-white/20"
@@ -348,7 +348,13 @@ function OrderPage({ onBack }: { onBack: () => void }) {
                         )}>
                           {p.tag}
                         </span>
-                        <span className="text-[12px] font-bold text-white block truncate tracking-widest uppercase">{p.name}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[12px] font-bold text-white block truncate tracking-widest uppercase">{p.name}</span>
+                          <span className={cn(
+                            "text-[10px] font-bold md:hidden",
+                            selectedProduct.id === p.id ? "text-luminex-yellow" : "text-white/40"
+                          )}>{p.price}</span>
+                        </div>
                       </div>
                       {selectedProduct.id === p.id && (
                         <motion.div 
@@ -401,10 +407,10 @@ function OrderPage({ onBack }: { onBack: () => void }) {
           </div>
 
           {/* Right: Checkout Form */}
-          <div className="lg:col-span-5 space-y-16 lg:sticky lg:top-32">
+          <div className="lg:col-span-5 space-y-12 md:space-y-16 lg:sticky lg:top-32">
             <div className="space-y-6">
               <span className="text-xs font-bold text-white/40 uppercase tracking-[0.4em]">Step 02: Secure Allocation</span>
-              <h1 className="text-5xl md:text-7xl font-serif italic leading-none tracking-tighter">Your Legacy,<br />Illuminated.</h1>
+              <h1 className="text-4xl md:text-7xl font-serif italic leading-none tracking-tighter">Your Legacy,<br />Illuminated.</h1>
             </div>
 
             <div className="space-y-10">
@@ -484,7 +490,7 @@ export default function App() {
 
   return (
     <main className="selection:bg-luminex-yellow/20 selection:text-white">
-      <Navbar onOrder={handleOrder} />
+      {page === 'home' && <Navbar onOrder={handleOrder} />}
       
       <AnimatePresence mode="wait">
         {page === 'home' ? (
