@@ -21,7 +21,7 @@ export function Navbar({ onOrder }: { onOrder: () => void }) {
         className="glass mt-4 md:mt-6 px-4 md:px-8 py-3 md:py-4 rounded-full flex items-center gap-4 md:gap-12 border-white/10 shadow-2xl mx-4 md:mx-6 shrink-0"
       >
         <div className="text-sm md:text-lg font-black tracking-[0.4em] uppercase italic cursor-pointer group shrink-0">
-          LUMI<span>N</span>EX<span className="text-luminex-yellow">.</span>
+          LUMI<span className="text-luminex-yellow">N</span>EX<span className="text-luminex-yellow">.</span>
         </div>
         
         <div className="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.3em] font-bold opacity-40">
@@ -64,15 +64,15 @@ export function Hero({ onOrder }: { onOrder: () => void }) {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="inline-block text-[11px] uppercase tracking-[0.5em] text-luminex-yellow font-bold mb-8 glow-text">
-            Custom Glowing Memories
+            Custom Glowing Art
           </span>
           <h1 className="text-5xl md:text-[140px] font-serif italic leading-[1] md:leading-[0.8] tracking-tighter select-none mb-12 uppercase">
-            LUMI<span className="text-luminex-yellow px-1">N</span>EX<span className="not-italic text-luminex-yellow text-glow">.</span>
+            LUMI<span className="text-luminex-yellow">N</span>EX<span className="not-italic text-luminex-yellow text-glow">.</span>
           </h1>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
             <p className="max-w-md text-xs md:text-base leading-relaxed opacity-60 italic font-serif text-center md:text-left balance">
-              "Turn your favorite moments into a beautifully glowing keepsake, crafted to capture emotion, tell your story, and be treasured forever."
+              "Give the one gift they'll never forget. Transform your favorite moments into enchanting, glowing works of art."
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 w-full md:w-auto">
               <button 
@@ -81,9 +81,7 @@ export function Hero({ onOrder }: { onOrder: () => void }) {
               >
                 Place Order
               </button>
-              <button 
-              onClick={() => window.location.href = '#how-it-works'}
-              className="flex-1 md:flex-none px-8 md:px-10 py-4 md:py-5 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-luminex-yellow hover:text-luminex-yellow transition-all pointer-events-auto">
+              <button className="flex-1 md:flex-none px-8 md:px-10 py-4 md:py-5 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest hover:border-luminex-yellow hover:text-luminex-yellow transition-all pointer-events-auto">
                 The Process
               </button>
             </div>
@@ -117,21 +115,21 @@ export function ProductSection({ onOrder }: { onOrder: () => void }) {
     { 
       name: 'LumiChain', 
       desc: 'Carry your favorite memory anywhere with our signature handcrafted glowing keychain.', 
-      price: '₹299', 
+      price: '₹599', 
       icon: <Zap />, 
       img: 'LumiChain.jpg'
     },
     { 
       name: 'LumiFrame', 
       desc: 'The perfect minimalist light frame for your desktop, bringing a soft glow to your most cherished moments.', 
-      price: '₹699', 
+      price: '₹1,999', 
       icon: <Sparkles />, 
       img: 'LumiFrameV1.png'
     },
     { 
       name: 'LumiBox', 
       desc: 'Our signature deep-etched wooden light box designed for the ultimate sentimental gift.', 
-      price: '₹999', 
+      price: '₹3,499', 
       icon: <Heart />, 
       img: 'LumiBox.png'
     },

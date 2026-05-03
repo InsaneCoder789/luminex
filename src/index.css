@@ -20,6 +20,8 @@
   body {
     @apply bg-luminex-black text-luminex-text antialiased selection:bg-luminex-yellow/20 selection:text-white;
     font-family: var(--font-sans);
+    overflow-x: hidden;
+    width: 100%;
   }
 
   h1, h2, h3, h4 {
@@ -55,4 +57,24 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex !important;
+  width: max-content;
+  animation: marquee 120s linear infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

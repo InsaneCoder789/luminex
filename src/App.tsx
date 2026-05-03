@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Navbar, Hero, ProductSection } from './components/Layout';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -52,15 +52,20 @@ function ProcessSection() {
 function LimitedEdition({ onOrder }: { onOrder: () => void }) {
   return (
     <section className="min-h-[800px] flex items-center relative overflow-hidden bg-luminex-black border-y border-white/5">
-      {/* Cinematic Video Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* Cinematic Background - Video for Desktop, Static Image for Mobile */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <video 
           src="video200.mp4" 
           autoPlay 
           loop 
           muted 
           playsInline 
-          className="w-full h-full object-cover opacity-60"
+          className="hidden md:block w-full h-full object-cover opacity-60 scale-[1.1] translate-y-2"
+        />
+        <img 
+          src="/luminexm1mobile.jpeg" 
+          alt="Luminex M1 Mobile"
+          className="block md:hidden w-full h-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-luminex-black via-luminex-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-luminex-black via-transparent to-luminex-black opacity-60" />
@@ -77,11 +82,13 @@ function LimitedEdition({ onOrder }: { onOrder: () => void }) {
         >
           <div className="space-y-4">
             <span className="text-[10px] uppercase tracking-[0.5em] text-luminex-yellow font-black glow-text drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">A Donum Original</span>
-            <h2 className="text-6xl md:text-[8rem] font-serif italic leading-[0.8] tracking-tighter text-white drop-shadow-[0_0_50px_rgba(251,191,36,0.1)]">Luminex<br />M1<span className="not-italic text-luminex-yellow text-glow">.</span></h2>
+            <h2 className="text-6xl md:text-[8rem] font-serif italic leading-[0.8] tracking-tighter text-white drop-shadow-[0_0_50px_rgba(251,191,36,0.1)] uppercase">
+              LUMI<span className="text-luminex-yellow">N</span>EX<br />M1<span className="not-italic text-luminex-yellow text-glow">.</span>
+            </h2>
           </div>
           
           <div className="space-y-10">
-            <p className="text-white/80 leading-relaxed uppercase tracking-[0.2em] text-[12px] max-w-xl font-medium drop-shadow-sm">
+            <p className="text-white/60 leading-relaxed font-serif italic text-base md:text-lg max-w-xl drop-shadow-sm">
               A future-forward exploration of illuminated art. Our most ambitious engineering project to date, designed to transform any environment into a gallery of light.
             </p>
             
@@ -257,8 +264,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'm1',
       name: 'Luminex M1', 
       tag: 'Flagship Concept',
-      price: '₹12,499',
-      priceNum: 12499,
+      price: '₹1499',
+      priceNum: 1499,
       img: 'luminexm1.jpeg',
       features: ['Prism Optics', 'Liquid Titanium', 'Atmospheric Remote']
     },
@@ -266,8 +273,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'frame',
       name: 'LumiFrame V1', 
       tag: 'Desktop Minimalist',
-      price: '₹1,999',
-      priceNum: 1999,
+      price: '₹999',
+      priceNum: 999,
       img: 'LumiFrameV1.png',
       features: ['Optical Acrylic', 'USB Powered', 'Compact Design']
     },
@@ -275,8 +282,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'box',
       name: 'LumiBox', 
       tag: 'Premium Series',
-      price: '₹3,499',
-      priceNum: 3499,
+      price: '₹699',
+      priceNum: 699,
       img: 'LumiBox.png',
       features: ['Deep Etching', 'Hardwood Case', 'Ambient Glow']
     },
@@ -284,8 +291,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'chain',
       name: 'LumiChain', 
       tag: 'Pocket Artifact',
-      price: '₹599',
-      priceNum: 599,
+      price: '₹299',
+      priceNum: 299,
       img: 'LumiChain.jpg',
       features: ['Handcrafted', 'Brass Fittings', 'Key-Safe']
     }
@@ -293,6 +300,31 @@ function OrderPage({ onBack }: { onBack: () => void }) {
 
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const currentIndex = products.findIndex(p => p.id === selectedProduct.id);
+  const handleNav = (dir: 'next' | 'prev') => {
+    const nextIdx = dir === 'next' 
+      ? (currentIndex + 1) % products.length 
+      : (currentIndex - 1 + products.length) % products.length;
+    setSelectedProduct(products[nextIdx]);
+  };
+
+  useEffect(() => {
+    if (scrollRef.current && window.innerWidth < 768) {
+      const activeElement = scrollRef.current.children[currentIndex] as HTMLElement;
+      if (activeElement) {
+        const container = scrollRef.current;
+        const targetScroll = activeElement.offsetLeft - (container.offsetWidth / 2) + (activeElement.offsetWidth / 2);
+        
+        container.scrollTo({
+          left: targetScroll,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -303,12 +335,14 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-luminex-black pt-8 md:pt-32 pb-24 md:pb-40 relative px-4 md:px-6"
+      className="min-h-screen bg-luminex-black pt-8 md:pt-32 pb-24 md:pb-40 relative px-4 md:px-6 overflow-x-hidden w-full"
     >
-      <div className="blob bg-luminex-accent-yellow w-[800px] h-[800px] -top-40 -left-40 opacity-10 blur-3xl pointer-events-none" />
-      <div className="blob bg-luminex-accent-purple w-[600px] h-[600px] bottom-0 right-0 opacity-10 blur-3xl pointer-events-none" />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="blob bg-luminex-accent-yellow w-[800px] h-[800px] -top-40 -left-40 opacity-10 blur-3xl" />
+        <div className="blob bg-luminex-accent-purple w-[600px] h-[600px] -bottom-40 -right-40 opacity-10 blur-3xl" />
+      </div>
       
-      <div className="container mx-auto">
+      <div className="container mx-auto relative z-10">
         <button 
           onClick={onBack}
           className="flex items-center gap-4 group mb-8 md:mb-12 opacity-40 hover:opacity-100 transition-all"
@@ -329,15 +363,15 @@ function OrderPage({ onBack }: { onBack: () => void }) {
                     ))}
                   </div>
                </div>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
+               <div ref={scrollRef} className="flex md:grid md:grid-cols-4 gap-4 md:gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 no-scrollbar px-2 md:px-0 scroll-smooth">
                   {products.map((p) => (
                     <button 
                       key={p.id}
                       onClick={() => setSelectedProduct(p)}
                       className={cn(
-                        "relative p-4 md:p-6 rounded-2xl md:rounded-3xl border transition-all text-left flex flex-col justify-between group overflow-hidden min-w-[140px] md:min-w-0 transition-all duration-300",
+                        "relative p-4 md:p-6 rounded-2xl md:rounded-3xl border transition-all text-left flex flex-col justify-between group overflow-hidden min-w-[180px] md:min-w-0 transition-all duration-500 flex-shrink-0 md:flex-shrink",
                         selectedProduct.id === p.id 
-                          ? "bg-luminex-yellow/10 border-luminex-yellow shadow-[0_0_40px_rgba(251,191,36,0.15)] scale-105 md:scale-100" 
+                          ? "bg-luminex-yellow/10 border-luminex-yellow shadow-[0_0_40px_rgba(251,191,36,0.15)] md:scale-100" 
                           : "bg-white/[0.02] border-white/5 hover:border-white/20"
                       )}
                     >
@@ -369,21 +403,44 @@ function OrderPage({ onBack }: { onBack: () => void }) {
 
             <motion.div 
               key={selectedProduct.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-2xl md:rounded-[40px] overflow-hidden border border-white/10 glow-box bg-luminex-dark shadow-2xl"
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="relative rounded-2xl md:rounded-[40px] overflow-hidden border border-white/10 glow-box bg-luminex-dark shadow-2xl group/display w-full aspect-square md:aspect-video lg:aspect-[4/3] max-h-[500px] md:max-h-[600px]"
             >
               <img 
                 src={selectedProduct.img} 
                 alt={selectedProduct.name} 
-                className="w-full h-auto object-contain bg-luminex-black/40 min-h-[250px] md:min-h-[600px]" 
+                className="w-full h-full object-cover bg-luminex-black/40" 
               />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-luminex-black via-luminex-black/40 to-transparent" />
+              
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-luminex-black via-luminex-black/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-6 md:bottom-12 left-6 md:left-12 right-6 md:right-12">
-                 <div className="flex items-center gap-4">
-                    <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-luminex-yellow shadow-[0_0_15px_#fbbf24] animate-pulse" />
-                    <h2 className="text-xl md:text-5xl font-serif italic text-white tracking-tight leading-none">{selectedProduct.name}</h2>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-luminex-yellow shadow-[0_0_15px_#fbbf24] animate-pulse" />
+                      <h2 className="text-xl md:text-5xl font-serif italic text-white tracking-tight leading-none">{selectedProduct.name}</h2>
+                    </div>
+
+                    {/* Contextual navigation buttons for mobile */}
+                    <div className="flex md:hidden gap-3">
+                      {currentIndex > 0 && (
+                        <button 
+                          onClick={() => handleNav('prev')}
+                          className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center active:scale-90 transition-transform"
+                        >
+                          <ArrowLeft className="w-4 h-4 text-white" />
+                        </button>
+                      )}
+                      {currentIndex < products.length - 1 && (
+                        <button 
+                          onClick={() => handleNav('next')}
+                          className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center active:scale-90 transition-transform"
+                        >
+                          <ArrowRight className="w-4 h-4 text-white" />
+                        </button>
+                      )}
+                    </div>
                  </div>
               </div>
             </motion.div>
@@ -391,15 +448,15 @@ function OrderPage({ onBack }: { onBack: () => void }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                <div className="glass p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] space-y-3 md:space-y-4">
                   <Upload className="w-5 h-5 md:w-6 md:h-6 text-luminex-yellow" />
-                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/90">Memories First</h4>
-                  <p className="text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-serif italic text-white/90">Memories First</h4>
+                  <p className="text-xs md:text-sm text-white/50 font-serif italic leading-relaxed">
                     Upload your favorite high-resolution photo. Our AI-assisted etching process ensures every detail is captured.
                   </p>
                </div>
                <div className="glass p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] space-y-3 md:space-y-4">
                   <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-luminex-yellow" />
-                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/90">Artisan Precision</h4>
-                  <p className="text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-serif italic text-white/90">Artisan Precision</h4>
+                  <p className="text-xs md:text-sm text-white/50 font-serif italic leading-relaxed">
                     Each unit undergoes 48 hours of meticulous hand-finishing and inspection by our studio team.
                   </p>
                </div>
@@ -489,7 +546,7 @@ export default function App() {
   };
 
   return (
-    <main className="selection:bg-luminex-yellow/20 selection:text-white">
+    <main className="selection:bg-luminex-yellow/20 selection:text-white bg-luminex-black min-h-screen relative overflow-x-hidden">
       {page === 'home' && <Navbar onOrder={handleOrder} />}
       
       <AnimatePresence mode="wait">
@@ -504,15 +561,15 @@ export default function App() {
             <LimitedEdition onOrder={handleOrder} />
 
             {/* Full-screen Hero Wrapper for Video */}
-            <section className="relative h-screen border-t border-white/5">
-              <div className="absolute inset-0 z-0 pointer-events-none">
+            <section className="relative h-screen border-t border-white/5 overflow-hidden">
+              <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <video 
                   src="video100.mp4" 
                   autoPlay 
                   loop 
                   muted 
                   playsInline 
-                  className="w-full h-full object-cover opacity-60"
+                  className="w-full h-full object-cover opacity-60 scale-[1.1] translate-y-2"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-luminex-black via-transparent to-luminex-black opacity-80" />
               </div>
@@ -544,46 +601,56 @@ export default function App() {
               </div>
 
 
-              {/* Horizontal Slider */}
-              <div className="relative group">
-                <motion.div 
-                  drag="x"
-                  dragConstraints={{ right: 0, left: -2000 }}
-                  className="flex gap-8 px-12 cursor-grab active:cursor-grabbing pb-20"
-                >
-          {[
-            { name: "Ananya R.", quote: "The quality of the lamp is just amazing. It's the best gift I've ever given.", role: "Happy Customer", integrity: "5/5" },
-            { name: "Vikram S.", quote: "Absolutely beautiful. The light brings the photo to life. Highly recommended!", role: "Verified Buyer", integrity: "5/5" },
-            { name: "Rahul K.", quote: "A masterpiece of Indian craftsmanship. My home feels so much warmer now.", role: "Gifted to Family", integrity: "5/5" },
-            { name: "Sarah M.", quote: "The way the light catches the etching is beautiful. It's a work of art.", role: "Art Enthusiast", integrity: "5/5" },
-            { name: "Priya D.", quote: "Gifted this to my parents for their anniversary; they were mesmerized.", role: "Satisfied Customer", integrity: "5/5" }
-          ].map((t, i) => (
-            <div key={i} className="min-w-[300px] md:min-w-[550px] max-w-[90vw] glass p-10 md:p-20 relative overflow-hidden flex flex-col justify-between rounded-[40px] border border-white/5 hover:border-luminex-yellow/30 transition-all duration-700 group/card">
-              <div className="absolute top-0 right-0 p-6 md:p-10">
-                <div className="text-[7px] md:text-[8px] uppercase tracking-[0.5em] text-luminex-yellow font-black">Authentication: {t.integrity}</div>
-              </div>
-                      
-                      <div className="relative">
-                        <div className="text-8xl font-serif text-luminex-yellow/10 absolute -top-10 -left-6 select-none italic">"</div>
-                        <div className="text-2xl md:text-3xl font-serif italic text-white/90 leading-relaxed relative z-10">
-                          {t.quote}
+              {/* Seamless Infinite Slider */}
+              <div className="relative overflow-hidden group">
+                <div className="flex animate-marquee gap-8 py-20 px-4">
+                  {[...Array(2)].map((_, listIdx) => (
+                    <div key={listIdx} className="flex gap-8 whitespace-nowrap">
+                      {[
+                        { name: "Ananya Iyer", quote: "The quality of the lamp is just amazing. It's the best gift I've ever given.", role: "Happy Customer", integrity: "5/5" },
+                        { name: "Vikram Sethi", quote: "Absolutely beautiful. The light brings the photo to life. Highly recommended!", role: "Verified Buyer", integrity: "5/5" },
+                        { name: "Rahul Kapur", quote: "A masterpiece of Indian craftsmanship. My home feels so much warmer now.", role: "Gifted to Family", integrity: "5/5" },
+                        { name: "Meera Iyengar", quote: "The way the light catches the etching is beautiful. It's a work of art.", role: "Art Enthusiast", integrity: "5/5" },
+                        { name: "Arjun Pratap", quote: "The detailing is incredible. It feels premium and truly special when lit.", role: "Happy Buyer", integrity: "5/5" },
+                        { name: "Neha Tyagi", quote: "Such a unique gift idea. The glow adds a magical touch to the room.", role: "Gift Shopper", integrity: "5/5" },
+                        { name: "Rohan Mehra", quote: "Exceeded my expectations. The craftsmanship is top-notch.", role: "First-Time Customer", integrity: "5/5" },
+                        { name: "Ishani Verma", quote: "I love how elegant and artistic it looks. Perfect for cozy evenings.", role: "Home Decor Lover", integrity: "5/5" },
+                        { name: "Karan Joshi", quote: "Bought it as a surprise gift and it turned out to be unforgettable.", role: "Surprise Gifter", integrity: "5/5" },
+                        { name: "Aisha Khan", quote: "The glow is soft yet striking. It completely changes the ambiance.", role: "Interior Enthusiast", integrity: "5/5" },
+                        { name: "Manish Lamba", quote: "Truly a blend of art and emotion. It feels very personal.", role: "Satisfied Customer", integrity: "5/5" },
+                        { name: "Sneha Patil", quote: "The quality is fantastic and the engraving looks stunning when lit.", role: "Design Lover", integrity: "5/5" },
+                        { name: "Siddharth Varma", quote: "Every detail is so well crafted. It feels like a luxury product.", role: "Premium Buyer", integrity: "5/5" },
+                        { name: "Ankit Bansal", quote: "It made the perfect centerpiece for my room. Everyone asks about it.", role: "Proud Owner", integrity: "5/5" },
+                        { name: "Priya Das", quote: "Gifted this to my parents for their anniversary; they were mesmerized.", role: "Satisfied Customer", integrity: "5/5" }
+                      ].map((t, i) => (
+                        <div key={`${listIdx}-${i}`} className="min-w-[320px] md:min-w-[500px] whitespace-normal glass p-10 md:p-16 relative overflow-hidden flex flex-col justify-between rounded-[40px] border border-white/5 hover:border-luminex-yellow/30 transition-all duration-700 group/card">
+                          <div className="absolute top-0 right-0 p-6 md:p-10">
+                            <div className="text-[7px] md:text-[8px] uppercase tracking-[0.5em] text-luminex-yellow font-black">Authentication: {t.integrity}</div>
+                          </div>
+                                  
+                          <div className="relative">
+                            <div className="text-8xl font-serif text-luminex-yellow/10 absolute -top-10 -left-6 select-none italic">"</div>
+                            <div className="text-2xl md:text-3xl font-serif italic text-white/90 leading-relaxed relative z-10">
+                              {t.quote}
+                            </div>
+                          </div>
+    
+                          <div className="flex items-center gap-6 mt-16">
+                            <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 bg-gradient-to-tr from-luminex-yellow/20 to-transparent flex items-center justify-center text-[10px] font-bold text-luminex-yellow">
+                              {t.name.split(' ')[0][0]}
+                            </div>
+                            <div>
+                              <div className="font-black uppercase tracking-[0.3em] text-[10px] text-white/80">{t.name}</div>
+                              <div className="text-[9px] opacity-30 uppercase tracking-[0.2em] mt-1 italic font-serif ">{t.role}</div>
+                            </div>
+                          </div>
+                          
+                          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-luminex-yellow/5 blur-[80px] rounded-full group-hover/card:bg-luminex-yellow/10 transition-all duration-700" />
                         </div>
-                      </div>
-
-                      <div className="flex items-center gap-6 mt-16">
-                        <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 bg-gradient-to-tr from-luminex-yellow/20 to-transparent flex items-center justify-center text-[10px] font-bold text-luminex-yellow">
-                          {t.name.split(' ')[0][0]}
-                        </div>
-                        <div>
-                          <div className="font-black uppercase tracking-[0.3em] text-[10px] text-white/80">{t.name}</div>
-                          <div className="text-[9px] opacity-30 uppercase tracking-[0.2em] mt-1 italic font-serif ">{t.role}</div>
-                        </div>
-                      </div>
-                      
-                      <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-luminex-yellow/5 blur-[80px] rounded-full group-hover/card:bg-luminex-yellow/10 transition-all duration-700" />
+                      ))}
                     </div>
                   ))}
-                </motion.div>
+                </div>
                 
                 <div className="absolute left-1/2 -translate-x-1/2 bottom-0 flex items-center gap-4 opacity-20 group-hover:opacity-100 transition-opacity">
                   <span className="text-[9px] uppercase tracking-[0.4em] font-bold">Slide to see more stories</span>
