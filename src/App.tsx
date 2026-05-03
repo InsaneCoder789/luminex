@@ -88,7 +88,7 @@ function LimitedEdition({ onOrder }: { onOrder: () => void }) {
             <div className="flex flex-wrap items-center gap-8">
               <button 
                 onClick={onOrder}
-                className="px-16 py-8 bg-luminex-yellow text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white transition-all shadow-[0_0_60px_rgba(251,191,36,0.5)] active:scale-95 border border-luminex-yellow/50"
+                className="px-16 py-8 bg-luminex-yellow text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white transition-all shadow-[0_0_60_px_rgba(251,191,36,0.5)] active:scale-95 border border-luminex-yellow/50"
               >
                 Place Order
               </button>
@@ -99,7 +99,7 @@ function LimitedEdition({ onOrder }: { onOrder: () => void }) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[9px] uppercase tracking-widest text-luminex-yellow/60 font-bold">Status</span>
-                  <span className="text-xs font-mono text-luminex-yellow">Batch in Production</span>
+                  <span className="text-xs font-mono text-luminex-yellow">Batch 01 Production</span>
                 </div>
               </div>
             </div>
@@ -257,8 +257,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'm1',
       name: 'Luminex M1', 
       tag: 'Flagship Concept',
-      price: '₹1,299',
-      priceNum: 1299,
+      price: '₹12,499',
+      priceNum: 12499,
       img: 'luminexm1.jpeg',
       features: ['Prism Optics', 'Liquid Titanium', 'Atmospheric Remote']
     },
@@ -266,8 +266,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'frame',
       name: 'LumiFrame V1', 
       tag: 'Desktop Minimalist',
-      price: '₹999',
-      priceNum: 999,
+      price: '₹1,999',
+      priceNum: 1999,
       img: 'LumiFrameV1.png',
       features: ['Optical Acrylic', 'USB Powered', 'Compact Design']
     },
@@ -275,8 +275,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'box',
       name: 'LumiBox', 
       tag: 'Premium Series',
-      price: '₹699',
-      priceNum: 699,
+      price: '₹3,499',
+      priceNum: 3499,
       img: 'LumiBox.png',
       features: ['Deep Etching', 'Hardwood Case', 'Ambient Glow']
     },
@@ -284,8 +284,8 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       id: 'chain',
       name: 'LumiChain', 
       tag: 'Pocket Artifact',
-      price: '₹299',
-      priceNum: 299,
+      price: '₹599',
+      priceNum: 599,
       img: 'LumiChain.jpg',
       features: ['Handcrafted', 'Brass Fittings', 'Key-Safe']
     }
@@ -303,7 +303,7 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-luminex-black pt-12 md:pt-32 pb-24 md:pb-40 relative px-4 md:px-6"
+      className="min-h-screen bg-luminex-black pt-8 md:pt-32 pb-24 md:pb-40 relative px-4 md:px-6"
     >
       <div className="blob bg-luminex-accent-yellow w-[800px] h-[800px] -top-40 -left-40 opacity-10 blur-3xl pointer-events-none" />
       <div className="blob bg-luminex-accent-purple w-[600px] h-[600px] bottom-0 right-0 opacity-10 blur-3xl pointer-events-none" />
@@ -311,16 +311,16 @@ function OrderPage({ onBack }: { onBack: () => void }) {
       <div className="container mx-auto">
         <button 
           onClick={onBack}
-          className="flex items-center gap-4 group mb-12 opacity-40 hover:opacity-100 transition-all"
+          className="flex items-center gap-4 group mb-8 md:mb-12 opacity-40 hover:opacity-100 transition-all"
         >
           <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-2" />
           <span className="text-xs font-bold uppercase tracking-[0.3em]">Back to Gallery</span>
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-20 items-start">
           {/* Left: Product Selection & Visuals */}
-          <div className="lg:col-span-7 space-y-12 md:space-y-16">
-            <div className="space-y-6 md:space-y-4">
+          <div className="lg:col-span-7 space-y-10 md:space-y-16">
+            <div className="space-y-6">
                <div className="flex items-center justify-between px-2">
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Select Artifact</span>
                   <div className="hidden md:flex gap-2">
@@ -329,29 +329,29 @@ function OrderPage({ onBack }: { onBack: () => void }) {
                     ))}
                   </div>
                </div>
-               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
                   {products.map((p) => (
                     <button 
                       key={p.id}
                       onClick={() => setSelectedProduct(p)}
                       className={cn(
-                        "relative p-5 md:p-6 rounded-2xl md:rounded-3xl border transition-all text-left group overflow-hidden",
+                        "relative p-4 md:p-6 rounded-2xl md:rounded-3xl border transition-all text-left flex flex-col justify-between group overflow-hidden min-w-[140px] md:min-w-0 transition-all duration-300",
                         selectedProduct.id === p.id 
-                          ? "bg-luminex-yellow/10 border-luminex-yellow shadow-[0_0_40px_rgba(251,191,36,0.15)]" 
+                          ? "bg-luminex-yellow/10 border-luminex-yellow shadow-[0_0_40px_rgba(251,191,36,0.15)] scale-105 md:scale-100" 
                           : "bg-white/[0.02] border-white/5 hover:border-white/20"
                       )}
                     >
                       <div className="relative z-10 space-y-2">
                         <span className={cn(
-                          "text-[8px] uppercase tracking-widest font-black block transition-colors",
+                          "text-[7px] md:text-[8px] uppercase tracking-widest font-black block transition-colors",
                           selectedProduct.id === p.id ? "text-luminex-yellow" : "text-white/20"
                         )}>
                           {p.tag}
                         </span>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[12px] font-bold text-white block truncate tracking-widest uppercase">{p.name}</span>
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[10px] md:text-[12px] font-bold text-white block truncate tracking-widest uppercase">{p.name}</span>
                           <span className={cn(
-                            "text-[10px] font-bold md:hidden",
+                            "text-[8px] md:text-[10px] font-bold block",
                             selectedProduct.id === p.id ? "text-luminex-yellow" : "text-white/40"
                           )}>{p.price}</span>
                         </div>
@@ -372,73 +372,73 @@ function OrderPage({ onBack }: { onBack: () => void }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-3xl md:rounded-[40px] overflow-hidden border border-white/10 glow-box bg-luminex-dark shadow-2xl"
+              className="relative rounded-2xl md:rounded-[40px] overflow-hidden border border-white/10 glow-box bg-luminex-dark shadow-2xl"
             >
               <img 
                 src={selectedProduct.img} 
                 alt={selectedProduct.name} 
-                className="w-full h-auto object-contain bg-luminex-black/40 min-h-[300px] md:min-h-[600px]" 
+                className="w-full h-auto object-contain bg-luminex-black/40 min-h-[250px] md:min-h-[600px]" 
               />
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-luminex-black via-luminex-black/40 to-transparent" />
               <div className="absolute bottom-6 md:bottom-12 left-6 md:left-12 right-6 md:right-12">
                  <div className="flex items-center gap-4">
                     <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-luminex-yellow shadow-[0_0_15px_#fbbf24] animate-pulse" />
-                    <h2 className="text-2xl md:text-5xl font-serif italic text-white tracking-tight">{selectedProduct.name}</h2>
+                    <h2 className="text-xl md:text-5xl font-serif italic text-white tracking-tight leading-none">{selectedProduct.name}</h2>
                  </div>
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-               <div className="glass p-6 md:p-8 rounded-[2rem] space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+               <div className="glass p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] space-y-3 md:space-y-4">
                   <Upload className="w-5 h-5 md:w-6 md:h-6 text-luminex-yellow" />
-                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest">Memories First</h4>
-                  <p className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-wider leading-relaxed">
+                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/90">Memories First</h4>
+                  <p className="text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
                     Upload your favorite high-resolution photo. Our AI-assisted etching process ensures every detail is captured.
                   </p>
                </div>
-               <div className="glass p-6 md:p-8 rounded-[2rem] space-y-4">
+               <div className="glass p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] space-y-3 md:space-y-4">
                   <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-luminex-yellow" />
-                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest">Handmade Precision</h4>
-                  <p className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-wider leading-relaxed">
-                    Each unit undergoes 48 hours of meticulous hand-finishing and inspection.
+                  <h4 className="text-xs md:text-sm font-bold uppercase tracking-widest text-white/90">Artisan Precision</h4>
+                  <p className="text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
+                    Each unit undergoes 48 hours of meticulous hand-finishing and inspection by our studio team.
                   </p>
                </div>
             </div>
           </div>
 
           {/* Right: Checkout Form */}
-          <div className="lg:col-span-5 space-y-12 md:space-y-16 lg:sticky lg:top-32">
-            <div className="space-y-6">
-              <span className="text-xs font-bold text-white/40 uppercase tracking-[0.4em]">Step 02: Secure Allocation</span>
-              <h1 className="text-4xl md:text-7xl font-serif italic leading-none tracking-tighter">Your Legacy,<br />Illuminated.</h1>
+          <div className="lg:col-span-5 space-y-10 md:space-y-16 lg:sticky lg:top-32">
+            <div className="space-y-4 md:space-y-6">
+              <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.4em]">Step 02: Secure Allocation</span>
+              <h1 className="text-3xl md:text-7xl font-serif italic leading-none tracking-tighter text-white">Your Legacy,<br />Illuminated.</h1>
             </div>
 
-            <div className="space-y-10">
-              <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex flex-col gap-3">
-                  <label className="text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Full Name</label>
-                  <input type="text" required className="bg-transparent border-b border-white/10 py-4 focus:border-luminex-yellow outline-none text-xl font-light transition-all" placeholder="Enter your name" />
+            <div className="space-y-8 md:space-y-10">
+              <form className="space-y-6 md:space-y-8" onSubmit={(e) => e.preventDefault()}>
+                <div className="flex flex-col gap-2">
+                  <label className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Full Name</label>
+                  <input type="text" required className="bg-transparent border-b border-white/5 py-3 md:py-4 focus:border-luminex-yellow outline-none text-lg md:text-xl font-light transition-all text-white/90" placeholder="Enter your name" />
                 </div>
-                <div className="flex flex-col gap-3">
-                  <label className="text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Shipping Address</label>
-                  <textarea required className="bg-transparent border-b border-white/10 py-4 focus:border-luminex-yellow outline-none text-xl font-light transition-all resize-none" rows={2} placeholder="Your destination" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Shipping Address</label>
+                  <textarea required className="bg-transparent border-b border-white/5 py-3 md:py-4 focus:border-luminex-yellow outline-none text-lg md:text-xl font-light transition-all resize-none text-white/90" rows={2} placeholder="Your destination" />
                 </div>
-                <div className="flex flex-col gap-3">
-                  <label className="text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Contact Information</label>
-                  <input type="email" required className="bg-transparent border-b border-white/10 py-4 focus:border-luminex-yellow outline-none text-xl font-light transition-all" placeholder="email@address.com" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-black opacity-30">Contact Information</label>
+                  <input type="email" required className="bg-transparent border-b border-white/5 py-3 md:py-4 focus:border-luminex-yellow outline-none text-lg md:text-xl font-light transition-all text-white/90" placeholder="email@address.com" />
                 </div>
               </form>
 
-              <div className="flex flex-col gap-6 pt-10">
-                 <div className="flex justify-between items-center text-sm uppercase tracking-widest font-black">
-                    <span className="opacity-40">{selectedProduct.name} - {selectedProduct.tag}</span>
-                    <span className="text-luminex-yellow text-2xl">{selectedProduct.price}</span>
+              <div className="flex flex-col gap-5 pt-8 border-t border-white/5">
+                 <div className="flex justify-between items-center text-xs md:text-sm uppercase tracking-widest font-black">
+                    <span className="opacity-40">{selectedProduct.name} Artifact</span>
+                    <span className="text-luminex-yellow text-xl md:text-2xl">{selectedProduct.price}</span>
                  </div>
-                 <div className="flex justify-between items-center text-[10px] uppercase tracking-widest font-black opacity-40">
+                 <div className="flex justify-between items-center text-[9px] md:text-[10px] uppercase tracking-widest font-black opacity-30">
                     <span>Priority Shipping (Insured)</span>
-                    <span>Included</span>
+                    <span>included</span>
                  </div>
-                 <div className="h-px bg-white/5" />
+                 <div className="h-px bg-white/5 my-2" />
                  <button 
                   onClick={() => {
                     setIsSubmitting(true);
@@ -449,21 +449,21 @@ function OrderPage({ onBack }: { onBack: () => void }) {
                     }, 2000);
                   }}
                   disabled={isSubmitting}
-                  className="w-full py-8 bg-luminex-yellow text-black rounded-2xl text-[12px] font-black uppercase tracking-[0.5em] hover:bg-white transition-all shadow-[0_0_80px_rgba(251,191,36,0.3)] active:scale-95 group flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-6 md:py-8 bg-luminex-yellow text-black rounded-xl md:rounded-2xl text-[11px] md:text-[12px] font-black uppercase tracking-[0.4em] hover:bg-white transition-all shadow-[0_0_50px_rgba(251,191,36,0.2)] active:scale-95 group flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "Processing Assignment..." : "Confirm Assignment"}
+                  {isSubmitting ? "Processing Allocation..." : "Confirm Assignment"}
                   {!isSubmitting && <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />}
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-8 pt-10">
-                 <div className="flex items-center gap-4 opacity-30">
-                    <Truck className="w-5 h-5 text-luminex-yellow" />
-                    <span className="text-[8px] uppercase tracking-widest font-black">Global Delivery</span>
+              <div className="grid grid-cols-2 gap-4 md:gap-8 pt-8">
+                 <div className="flex items-center gap-3 md:gap-4 opacity-20">
+                    <Truck className="w-4 h-4 md:w-5 md:h-5 text-luminex-yellow" />
+                    <span className="text-[7px] md:text-[8px] uppercase tracking-widest font-black">Global Delivery</span>
                  </div>
-                 <div className="flex items-center gap-4 opacity-30">
-                    <CreditCard className="w-5 h-5 text-luminex-yellow" />
-                    <span className="text-[8px] uppercase tracking-widest font-black">Secure Checkout</span>
+                 <div className="flex items-center gap-3 md:gap-4 opacity-20">
+                    <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-luminex-yellow" />
+                    <span className="text-[7px] md:text-[8px] uppercase tracking-widest font-black">Secure Payment</span>
                  </div>
               </div>
             </div>
@@ -501,8 +501,10 @@ export default function App() {
             exit={{ opacity: 0 }}
             className="relative z-10 overflow-x-hidden"
           >
+            <LimitedEdition onOrder={handleOrder} />
+
             {/* Full-screen Hero Wrapper for Video */}
-            <section className="relative h-screen">
+            <section className="relative h-screen border-t border-white/5">
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <video 
                   src="video100.mp4" 
@@ -522,8 +524,6 @@ export default function App() {
             <DetailGallery />
 
             <ProcessSection />
-
-            <LimitedEdition onOrder={handleOrder} />
             
             <section id="reviews" className="py-40 border-t border-white/5 overflow-hidden relative">
               <div className="blob bg-luminex-yellow/10 w-[1500px] h-[1000px] -top-1/4 -left-1/4 blur-[180px] pointer-events-none" />
